@@ -71,6 +71,213 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Notes/Maven" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/03/17/Notes/Maven/" class="article-date">
+  <time class="dt-published" datetime="2023-03-16T16:00:00.000Z" itemprop="datePublished">2023-03-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/03/17/Notes/Maven/">Maven</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h1><h3 id="视频资料"><a href="#视频资料" class="headerlink" title="视频资料"></a>视频资料</h3><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Aa411M7fu">https://www.bilibili.com/video/BV1Aa411M7fu</a></p>
+<hr>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Maven【[ˈmevən]】这个词可以翻译为”专家”,”内行”。 作为Apache组织中的一个颇为成功的开源项目，Maven主要服务于基于java平台的项目构建，依赖管理和项目信息管理</p>
+<hr>
+<h2 id="四大特性"><a href="#四大特性" class="headerlink" title="四大特性"></a>四大特性</h2><h3 id="依赖管理系统"><a href="#依赖管理系统" class="headerlink" title="依赖管理系统"></a>依赖管理系统</h3><p>引入jar包管理，使用coordination（坐标）去唯一标识一个依赖。</p>
+<p>coordination由group id，artifact id，version组成</p>
+<p>Maven 项目也会有一个坐标，也可以生成jar包或war包</p>
+<p>典型的依赖引用如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.servlet<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span> com.baidu</span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>javax.servlet-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span> ueditor echarts</span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>group id</p>
+<p>定义当前Maven项目隶属的“实际项目”或“公司名称”。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/shi779276212/article/details/92795085">Java包（package）的命名规范&amp;规则_任凭时光流逝的博客-CSDN博客</a></p>
+</li>
+<li><p>artifact id</p>
+<p>定义Maven项目中的一个模块或项目的名字。eg：spring-core，spring-webmvc</p>
+</li>
+<li><p>version</p>
+<p>版本：</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://maven.apache.org/guides/mini/guide-naming-conventions.html">Maven – Guide to Naming Conventions (apache.org)</a></p>
+<h3 id="多模块构建（Project-Object-Model，POM）"><a href="#多模块构建（Project-Object-Model，POM）" class="headerlink" title="多模块构建（Project Object Model，POM）"></a>多模块构建（Project Object Model，POM）</h3><p>常见方式：一个项目包含dao，service，controller三个层分离为三个模块</p>
+<p>在Maven中需要定义一个parent POM作为一组module的聚合POM。该POM中可以使用标签来定义一组子模块。parent POM不会有什么实际构建产出，但是它的build配置以及依赖配置都会自动继承给子module。</p>
+<h3 id="一致的项目结构"><a href="#一致的项目结构" class="headerlink" title="一致的项目结构"></a>一致的项目结构</h3><p>Maven设计之初的理念：Conversion over configuration（约定大于配置）。给定一套项目目录结构作为标准额java项目结构，解决不同ide带来的文件目录不一致的问题。</p>
+<h3 id="一致的构建模型和插件机制"><a href="#一致的构建模型和插件机制" class="headerlink" title="一致的构建模型和插件机制"></a>一致的构建模型和插件机制</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mortbay.jetty<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-jetty-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>6.1.25<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">scanIntervalSeconds</span>&gt;</span>10<span class="tag">&lt;/<span class="name">scanIntervalSeconds</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">contextPath</span>&gt;</span>/test<span class="tag">&lt;/<span class="name">contextPath</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Maven的安装配置"><a href="#Maven的安装配置" class="headerlink" title="Maven的安装配置"></a>Maven的安装配置</h2><ul>
+<li><p>JDK版本：&gt;&#x3D;1.7</p>
+</li>
+<li><p>下载地址：<a target="_blank" rel="noopener" href="https://maven.apache.org/download.cgi">Maven – Download Apache Maven</a></p>
+</li>
+<li><p>配置Maven环境变量：在系统环境中添加根目录作为MAVEN_HOME变量，bin目录配置到path变量中。</p>
+</li>
+<li><p>Maven解压后目录不应含中文和空格</p>
+</li>
+<li><p>检查Maven安装成功：打开dos，执行mvn -v</p>
+</li>
+</ul>
+<hr>
+<h2 id="Maven目录结构"><a href="#Maven目录结构" class="headerlink" title="Maven目录结构"></a>Maven目录结构</h2><table>
+<thead>
+<tr>
+<th>目录</th>
+<th>目的</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>项目根目录: &#x2F;</td>
+<td>存放pom.xml和所有子目录</td>
+</tr>
+<tr>
+<td>&#x2F;src&#x2F;main&#x2F;java</td>
+<td>项目的java源码</td>
+</tr>
+<tr>
+<td>&#x2F;src&#x2F;main&#x2F;resources</td>
+<td>项目的资源，如property文件</td>
+</tr>
+<tr>
+<td>&#x2F;src&#x2F;test&#x2F;java</td>
+<td>项目的测试类，如JUnit代码</td>
+</tr>
+<tr>
+<td>&#x2F;src&#x2F;test&#x2F;resources</td>
+<td>测试使用的资源</td>
+</tr>
+</tbody></table>
+<h3 id="pom-xml示例"><a href="#pom-xml示例" class="headerlink" title="pom.xml示例"></a>pom.xml示例</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0</span></span></span><br><span class="line"><span class="string"><span class="tag">            http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.xxxx<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven01<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>maven01<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://maven.apache.org<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.8.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="标签定义解释"><a href="#标签定义解释" class="headerlink" title="标签定义解释"></a>标签定义解释</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">根目录下的第一个子元素 ModelVersion指定当前Pom模型的版本，</span><br><span class="line">对于Maven2和Maven3来说，它只能是4.0.0</span><br><span class="line"></span><br><span class="line">groupId定义了项目属于哪个组， 这个组往往和项目所在的组织和公司存在关联。</span><br><span class="line">比如： com.xxxx</span><br><span class="line"></span><br><span class="line">artifactId 定义了当前Maven项目在组中唯一的ID。</span><br><span class="line"></span><br><span class="line">Version X.X.X-里程碑</span><br><span class="line">比如：1.0.0-SNAPSHOT</span><br><span class="line">第一个X 大版本 有重大变革</span><br><span class="line">第二个X 小版本 修复bug，增加功能</span><br><span class="line">第三个X 更新</span><br><span class="line"></span><br><span class="line">里程碑版本：</span><br><span class="line">SNAPSHOT （快照，开发版）</span><br><span class="line">alpha（内部测试）</span><br><span class="line">beta（公开测试）</span><br><span class="line">Release | RC（ 发布版）</span><br><span class="line">GA（正常版本）</span><br><span class="line"></span><br><span class="line">使用name标签声明一个对于用户更为友好的项目名称。</span><br><span class="line">虽然不是必须的，但还是推荐为每个Pom声明name，以方便信息交流。</span><br></pre></td></tr></table></figure>
+
+<h3 id="编译并运行"><a href="#编译并运行" class="headerlink" title="编译并运行"></a>编译并运行</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 编译java文件：</span><br><span class="line">mvn compile</span><br><span class="line"></span><br><span class="line"># 执行main方法：</span><br><span class="line">mvn exec:java -Dexec.mainClass=&quot;com.xxx.demo.Hello&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改本地默认仓库未知"><a href="#修改本地默认仓库未知" class="headerlink" title="修改本地默认仓库未知"></a>修改本地默认仓库未知</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">打开maven目录 -&gt; conf -&gt; settings.xml</span><br><span class="line">添加仓库位置配置</span><br><span class="line">&lt;localRepository&gt;F:/m2/repository&lt;/localRepository&gt;</span><br><span class="line">注：仓库位置改为自己本机的指定目录，&quot;/&quot;不要写反</span><br></pre></td></tr></table></figure>
+
+<h3 id="更换阿里镜像"><a href="#更换阿里镜像" class="headerlink" title="更换阿里镜像"></a>更换阿里镜像</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;mirror&gt;</span><br><span class="line">    &lt;id&gt;nexus-aliyun&lt;/id&gt;</span><br><span class="line">    &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;</span><br><span class="line">    &lt;name&gt;Nexus aliyun&lt;/name&gt;</span><br><span class="line">    &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public&lt;/url&gt;</span><br><span class="line">&lt;/mirror&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h3><p>编译不成功，可能的问题：</p>
+<ul>
+<li><p>不是使用管理员权限</p>
+</li>
+<li><p>JDK环境配置有问题，重装JKD</p>
+</li>
+<li><p>代码编写时，类里面没有设置包名</p>
+</li>
+</ul>
+<hr>
+<h2 id="Maven命令"><a href="#Maven命令" class="headerlink" title="Maven命令"></a>Maven命令</h2><p>Maven 命令格式：<code>mvn [plugin-name]:[goal-name]</code></p>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>mvn –version</td>
+<td>显示版本信息</td>
+</tr>
+<tr>
+<td>mvn clean</td>
+<td>清理项目生产的临时文件,一般是模块下的target目录</td>
+</tr>
+<tr>
+<td>mvn compile</td>
+<td>编译源代码，一般编译模块下的src&#x2F;main&#x2F;java目录</td>
+</tr>
+<tr>
+<td>mvn package</td>
+<td>项目打包工具,会在模块下的target目录生成jar或war等文件</td>
+</tr>
+<tr>
+<td>mvn test</td>
+<td>测试命令,或执行src&#x2F;test&#x2F;java&#x2F;下junit的测试用例.</td>
+</tr>
+<tr>
+<td>mvn install</td>
+<td>将打包的jar&#x2F;war文件复制到你的本地仓库中,供其他模块使用</td>
+</tr>
+<tr>
+<td>mvn deploy</td>
+<td>将打包的文件发布到远程参考,提供其他人员进行下载依赖</td>
+</tr>
+<tr>
+<td>mvn site</td>
+<td>生成项目相关信息的网站</td>
+</tr>
+<tr>
+<td>mvn eclipse:eclipse</td>
+<td>将项目转化为Eclipse项目</td>
+</tr>
+<tr>
+<td>mvn dependency:tree</td>
+<td>打印出项目的整个依赖树</td>
+</tr>
+<tr>
+<td>mvn archetype:generate</td>
+<td>generate 创建Maven的普通java项目</td>
+</tr>
+<tr>
+<td>mvn tomcat7:run</td>
+<td>在tomcat容器中运行web应用</td>
+</tr>
+<tr>
+<td>mvn jetty:run</td>
+<td>调用 Jetty 插件的 Run 目标在 Jetty Servlet 容器中启动 web 应用</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">注意：运行maven命令的时候，首先需要定位到maven项目的目录，</span><br><span class="line">也就是项目的pom.xml文件所在的目录。</span><br><span class="line">否则，必以通过参数来指定项目的目录。</span><br></pre></td></tr></table></figure>
+
+<h3 id="命令参数"><a href="#命令参数" class="headerlink" title="命令参数"></a>命令参数</h3><ul>
+<li><p>-D 传入属性参数</p>
+<p>eg：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mvn package -Dmaven.test.skip=true</span><br><span class="line">mvn deploy -Dmaven.test.skip=true</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>-P 使用指定的Profile配置</p>
+</li>
+</ul>
+<p>        比如项目开发需要多个环境，一般为开发，测试，预发，正式四个环境，在pom.xml中的配置如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">profiles</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">profile</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>dev<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">env</span>&gt;</span>dev<span class="tag">&lt;/<span class="name">env</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">activation</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">activeByDefault</span>&gt;</span>true<span class="tag">&lt;/<span class="name">activeByDefault</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">activation</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">profile</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">profile</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>qa<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">env</span>&gt;</span>qa<span class="tag">&lt;/<span class="name">env</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">profile</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">profile</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>pre<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">env</span>&gt;</span>pre<span class="tag">&lt;/<span class="name">env</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">profile</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">profile</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>prod<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">env</span>&gt;</span>prod<span class="tag">&lt;/<span class="name">env</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">profile</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">profiles</span>&gt;</span></span><br><span class="line"></span><br><span class="line"> ......</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filters</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">filter</span>&gt;</span>config/$&#123;env&#125;.properties<span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line">    &lt;\filters&gt;</span><br><span class="line">    <span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">filtering</span>&gt;</span>true<span class="tag">&lt;/<span class="name">filtering</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">&lt;\build&gt;</span><br></pre></td></tr></table></figure>
+
+<p>profiles 定义了各个环境的变量id ，filters 中定义了变量配置文件的地址，其中地址中的环境变量就是上面 profile 中定义的值，resources 中是定义哪些目录下的文件会被配置文件中定义的变量替换。</p>
+<p> 通过maven可以实现按不同环境进行打包部署，例如： </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn package -Pdev -Dmaven.test.skip=true</span><br></pre></td></tr></table></figure>
+
+<p>表示打包本地环境，并跳过单元测试</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://haoyuwang141.github.io/2023/03/17/Notes/Maven/" data-id="clh3lhqxi0005m0vaep6043vw" data-title="Maven" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Notes/SpringBoot" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/03/17/Notes/SpringBoot/" class="article-date">
@@ -364,6 +571,10 @@
       <ul>
         
           <li>
+            <a href="/2023/06/13/venv/">venv</a>
+          </li>
+        
+          <li>
             <a href="/2023/06/10/Utils/">Utils</a>
           </li>
         
@@ -377,10 +588,6 @@
         
           <li>
             <a href="/2023/05/01/Notes/Mathematical%20Modeling/">Mathematical Modeling</a>
-          </li>
-        
-          <li>
-            <a href="/2023/04/30/%E6%BC%94%E5%8C%96%E7%AE%97%E6%B3%95/">evolution computation</a>
           </li>
         
       </ul>
